@@ -330,7 +330,7 @@
     marker-clip: false;
   }
 
-  [feature = 'amenity_bicycle_repair_station'][zoom >= 19] {
+  [feature = 'amenity_bicycle_repair_station'][zoom >= 11] {
     marker-file: url('symbols/amenity/bicycle_repair_station.svg');
     marker-fill: @amenity-brown;
     marker-clip: false;
@@ -714,7 +714,7 @@
     }
   }
 
-  [feature = 'amenity_drinking_water'][zoom >= 17] {
+  [feature = 'amenity_drinking_water'][zoom >= 12] {
     marker-file: url('symbols/amenity/drinking_water.svg');
     marker-fill: @amenity-brown;
     marker-clip: false;
@@ -1030,7 +1030,7 @@
       marker-file: url('symbols/shop/dairy.svg');
     }
 
-    [shop = 'bicycle'][zoom >= 18] {
+    [shop = 'bicycle'][zoom >= 12] {
       marker-file: url('symbols/shop/bicycle.svg');
     }
 
@@ -1447,7 +1447,7 @@
   [feature = 'amenity_parking_entrance'] {
     [zoom >= 14][way_pixels > 750]["parking" != 'street_side']["parking" != 'lane'],
     [zoom >= 17][feature = 'amenity_parking']["parking" != 'street_side']["parking" != 'lane'],
-    [zoom >= 18] {
+    [zoom >= 15] {
       [feature = 'amenity_parking'] { marker-file: url('symbols/amenity/parking.svg'); }
       [feature = 'amenity_parking']["parking" = 'street_side'],
       [feature = 'amenity_parking']["parking" = 'lane'] { 
@@ -1779,8 +1779,8 @@
   }
 
   [feature = 'amenity_bbq'][zoom >= 17],
-  [feature = 'amenity_bicycle_repair_station'][zoom >= 19],
-  [feature = 'amenity_drinking_water'][zoom >= 17],
+  [feature = 'amenity_bicycle_repair_station'][zoom >= 12],
+  [feature = 'amenity_drinking_water'][zoom >= 11],
   [feature = 'amenity_shower'][zoom >= 18],
   [feature = 'tourism_picnic_site'][zoom >= 17] {
     text-name: "[name]";
