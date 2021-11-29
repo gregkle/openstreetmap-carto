@@ -39,6 +39,7 @@ Stylesheet:
   - style/water-features.mss
   - style/road-colors-generated.mss
   - style/roads.mss
+  - style/landcover.mss
   - style/power.mss
   - style/placenames.mss
   - style/buildings.mss
@@ -1739,6 +1740,7 @@ Layer:
       table: |-
         (SELECT
             way,
+            cycleway,
             highway,
             height,
             width,
@@ -1747,12 +1749,14 @@ Layer:
             SELECT
                 way,
                 osm_id,
+                cycleway,
                 highway,
                 array_length(refs,1) AS height,
                 (SELECT MAX(char_length(ref)) FROM unnest(refs) AS u(ref)) AS width,
                 array_to_string(refs, E'\n') AS refs
               FROM (
                 SELECT
+                    cycleway,
                     way,
                     osm_id,
                     highway,
@@ -1762,6 +1766,7 @@ Layer:
                   AND ref IS NOT NULL
               ) AS p) AS q
           WHERE height <= 4 AND width <= 11
+            AND  (cycleway is not NULL and cycleway in ('designated', 'lane', 'separate', 'cyclestreet', 'shoulder'))
           ORDER BY
             CASE
               WHEN highway = 'motorway' THEN 38
@@ -1865,6 +1870,7 @@ Layer:
       table: |-
         (SELECT
             way,
+            cycleway,
             CASE WHEN substr(highway, length(highway)-4, 5) = '_link' THEN substr(highway, 0, length(highway)-4) ELSE highway END,
             CASE WHEN (tunnel = 'yes' OR tunnel = 'building_passage' OR covered = 'yes') THEN 'yes' ELSE 'no' END AS tunnel,
             construction,
@@ -1879,7 +1885,8 @@ Layer:
                             'tertiary_link', 'residential', 'unclassified', 'road', 'service', 'pedestrian', 'raceway', 'living_street', 'construction')
             AND (name IS NOT NULL
               OR oneway IN ('yes', '-1')
-              OR junction IN ('roundabout'))
+              OR junction IN ('roundabout')
+            AND (cycleway is not NULL and cycleway in ('designated', 'lane', 'separate', 'cyclestreet', 'shoulder')))
           ORDER BY
             z_order DESC, -- put important roads first
             COALESCE(layer, 0), -- put top layered roads first
@@ -1897,6 +1904,7 @@ Layer:
       <<: *osm2pgsql
       table: |-
         (SELECT
+            cycleway,
             way,
             highway,
             construction,
@@ -1912,6 +1920,7 @@ Layer:
             AND (name IS NOT NULL
               OR oneway IN ('yes', '-1')
               OR junction IN ('roundabout'))
+            AND (cycleway is not NULL and cycleway in ('designated', 'lane', 'separate', 'cyclestreet', 'shoulder'))
         ) AS paths_text_name
     properties:
       cache-features: true
@@ -1954,6 +1963,7 @@ Layer:
       <<: *osm2pgsql
       table: |-
         (SELECT
+            cycleway,
             way,
             highway,
             height,
@@ -1963,6 +1973,7 @@ Layer:
             SELECT
                 osm_id,
                 way,
+                cycleway,
                 highway,
                 array_length(refs,1) AS height,
                 (SELECT MAX(char_length(ref)) FROM unnest(refs) AS u(ref)) AS width,
@@ -1971,6 +1982,7 @@ Layer:
                 SELECT
                     osm_id,
                     way,
+                    cycleway,
                     CASE WHEN highway IN ('unclassified', 'residential', 'track') THEN highway END AS highway,
                     string_to_array(ref, ';') AS refs
                   FROM planet_osm_line
@@ -1978,6 +1990,7 @@ Layer:
                     AND ref IS NOT NULL
               ) AS p) AS q
           WHERE height <= 4 AND width <= 11
+            AND  (cycleway is not NULL and cycleway in ('designated', 'lane', 'separate', 'cyclestreet', 'shoulder'))
           ORDER BY
             CASE
               WHEN highway = 'unclassified' THEN 33
