@@ -703,6 +703,7 @@ Layer:
             horse,
             foot,
             bicycle,
+            cycleway,
             tracktype,
             int_surface,
             access,
@@ -716,6 +717,7 @@ Layer:
                 ('highway_' || highway) AS feature, --only motorway to tertiary links are accepted later on
                 horse,
                 foot,
+                cycleway,
                 bicycle,
                 tracktype,
                 CASE WHEN surface IN ('unpaved', 'compacted', 'dirt', 'earth', 'fine_gravel', 'grass', 'grass_paver', 'gravel', 'ground',
@@ -752,6 +754,7 @@ Layer:
                                      ELSE railway END)) AS feature,
                 horse,
                 foot,
+                cycleway,
                 bicycle,
                 tracktype,
                 'null',
@@ -771,6 +774,8 @@ Layer:
                 AND (bridge IS NULL OR NOT bridge IN ('yes', 'boardwalk', 'cantilever', 'covered', 'low_water_crossing', 'movable', 'trestle', 'viaduct'))
                 AND railway IS NOT NULL -- end of rail select
             ) AS features
+          WHERE 
+            (cycleway is not NULL and cycleway in ('designated', 'lane', 'separate', 'cyclestreet', 'shoulder'))
           ORDER BY
             layernotnull,
             z_order,
@@ -779,7 +784,8 @@ Layer:
             CASE WHEN access IN ('no', 'private') THEN 0 WHEN access IN ('destination') THEN 1 ELSE 2 END,
             CASE WHEN int_surface IN ('unpaved') THEN 0 ELSE 2 END,
             osm_id
-        ) AS roads_sql
+        ) 
+        AS roads_sql
     properties:
       cache-features: true
       minzoom: 10
