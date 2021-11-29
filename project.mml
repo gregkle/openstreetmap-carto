@@ -1786,12 +1786,14 @@ Layer:
         (SELECT
             way,
             highway,
+            cycleway,
             height,
             width,
             refs
           FROM (
             SELECT
                 osm_id,
+                cycleway,
                 way,
                 highway,
                 array_length(refs,1) AS height,
@@ -1800,6 +1802,7 @@ Layer:
               FROM (
                 SELECT
                     osm_id,
+                    cycleway,
                     way,
                     COALESCE(
                       CASE WHEN highway IN ('motorway', 'trunk', 'primary', 'secondary', 'tertiary') THEN highway END,
@@ -1811,6 +1814,7 @@ Layer:
                     AND ref IS NOT NULL
               ) AS p) AS q
           WHERE height <= 4 AND width <= 11
+            AND (cycleway is not NULL and cycleway in ('designated', 'lane', 'separate', 'cyclestreet', 'shoulder'))
           ORDER BY
             CASE
               WHEN highway = 'motorway' THEN 38
