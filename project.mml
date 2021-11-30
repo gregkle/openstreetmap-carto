@@ -1766,7 +1766,6 @@ Layer:
                   AND ref IS NOT NULL
                   AND  (cycleway is not NULL and cycleway in ('designated', 'lane', 'separate', 'cyclestreet', 'shoulder'))
               ) 
-              WHERE (cycleway is not NULL and cycleway in ('designated', 'lane', 'separate', 'cyclestreet', 'shoulder'))
               AS p) AS q
           WHERE height <= 4 AND width <= 11
             AND  (cycleway is not NULL and cycleway in ('designated', 'lane', 'separate', 'cyclestreet', 'shoulder'))
@@ -1822,7 +1821,6 @@ Layer:
                     AND ref IS NOT NULL
                     AND (cycleway is not NULL and cycleway in ('designated', 'lane', 'separate', 'cyclestreet', 'shoulder'))
               ) 
-              WHERE (cycleway is not NULL and cycleway in ('designated', 'lane', 'separate', 'cyclestreet', 'shoulder'))
               AS p) AS q
           WHERE height <= 4 AND width <= 11
             AND (cycleway is not NULL and cycleway in ('designated', 'lane', 'separate', 'cyclestreet', 'shoulder'))
