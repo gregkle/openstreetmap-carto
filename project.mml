@@ -1765,7 +1765,9 @@ Layer:
                   WHERE highway IN ('motorway', 'trunk', 'primary', 'secondary')
                   AND ref IS NOT NULL
                   AND  (cycleway is not NULL and cycleway in ('designated', 'lane', 'separate', 'cyclestreet', 'shoulder'))
-              ) AS p) AS q
+              ) 
+              WHERE (cycleway is not NULL and cycleway in ('designated', 'lane', 'separate', 'cyclestreet', 'shoulder'))
+              AS p) AS q
           WHERE height <= 4 AND width <= 11
             AND  (cycleway is not NULL and cycleway in ('designated', 'lane', 'separate', 'cyclestreet', 'shoulder'))
           ORDER BY
@@ -1818,7 +1820,10 @@ Layer:
                   FROM planet_osm_line
                   WHERE (highway IN ('motorway', 'trunk', 'primary', 'secondary', 'tertiary') OR aeroway IN ('runway', 'taxiway'))
                     AND ref IS NOT NULL
-              ) AS p) AS q
+                    AND (cycleway is not NULL and cycleway in ('designated', 'lane', 'separate', 'cyclestreet', 'shoulder'))
+              ) 
+              WHERE (cycleway is not NULL and cycleway in ('designated', 'lane', 'separate', 'cyclestreet', 'shoulder'))
+              AS p) AS q
           WHERE height <= 4 AND width <= 11
             AND (cycleway is not NULL and cycleway in ('designated', 'lane', 'separate', 'cyclestreet', 'shoulder'))
           ORDER BY
