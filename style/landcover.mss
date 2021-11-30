@@ -70,7 +70,6 @@
 
 #landcover-low-zoom[zoom < 10],
 #landcover[zoom >= 10] {
-  polygon-fill: @bare_ground;
 }
 
 
