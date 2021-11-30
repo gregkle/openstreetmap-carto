@@ -325,7 +325,10 @@
 @railway-text-repeat-distance: 200;
 
 #roads-casing, #highway-area-casing, #bridges, #tunnels {
-  line-color: @motorway-casing;
+  ::casing {
+    line-color: @motorway-casing;
+    line-width: 0.7;
+  }
 }
 
 
@@ -335,7 +338,10 @@ data, and is thus faster. Chosen is for zoom level 10 as cut-off, because
 tertiary is rendered from z10 and is not included in osm_planet_roads. */
 
 #roads-fill, #highway-area-fill, #roads-low-fill, #bridges, #tunnels {
-  line-color: @road-fill;
+  ::halo {
+    line-color: @road-fill;
+    line-width: 1;
+  }
 }
 
 #turning-circle-casing {
