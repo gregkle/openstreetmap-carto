@@ -745,34 +745,6 @@ Layer:
                 AND (covered IS NULL OR NOT covered = 'yes')
                 AND (bridge IS NULL OR NOT bridge IN ('yes', 'boardwalk', 'cantilever', 'covered', 'low_water_crossing', 'movable', 'trestle', 'viaduct'))
                 AND highway IS NOT NULL -- end of road select
-            UNION ALL
-            SELECT
-                way,
-                ('railway_' || (CASE WHEN railway = 'preserved' AND service IN ('spur', 'siding', 'yard') THEN 'INT-preserved-ssy'::text
-                                     WHEN (railway = 'rail' AND service IN ('spur', 'siding', 'yard')) THEN 'INT-spur-siding-yard'
-                                     WHEN (railway = 'tram' AND service IN ('spur', 'siding', 'yard')) THEN 'tram-service'
-                                     ELSE railway END)) AS feature,
-                horse,
-                foot,
-                cycleway,
-                bicycle,
-                tracktype,
-                'null',
-                CASE
-                  WHEN access IN ('destination') THEN 'destination'::text
-                  WHEN access IN ('no', 'private') THEN 'no'::text
-                END AS access,
-                construction,
-                CASE WHEN service IN ('parking_aisle', 'drive-through', 'driveway') OR leisure IN ('slipway') THEN 'INT-minor'::text ELSE 'INT-normal'::text END AS service,
-                'no' AS link,
-                COALESCE(layer,0) AS layernotnull,
-                osm_id,
-                z_order
-              FROM planet_osm_line
-              WHERE (tunnel IS NULL OR NOT tunnel IN ('yes', 'building_passage'))
-                AND (covered IS NULL OR NOT covered = 'yes')
-                AND (bridge IS NULL OR NOT bridge IN ('yes', 'boardwalk', 'cantilever', 'covered', 'low_water_crossing', 'movable', 'trestle', 'viaduct'))
-                AND railway IS NOT NULL -- end of rail select
             ) AS features
           WHERE 
             (cycleway is not NULL and cycleway in ('designated', 'lane', 'separate', 'cyclestreet', 'shoulder'))

@@ -365,7 +365,7 @@ osm_planet_line. This is for performance reasons: osm_planet_roads contains less
 data, and is thus faster. Chosen is for zoom level 10 as cut-off, because
 tertiary is rendered from z10 and is not included in osm_planet_roads. */
 
-#roads-fill[zoom >= 10],
+#roads-fill[zoom >= 9],
 #bridges[zoom >= 10],
 #tunnels[zoom >= 10] {
 
