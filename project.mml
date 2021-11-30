@@ -1764,6 +1764,7 @@ Layer:
                 FROM planet_osm_roads
                   WHERE highway IN ('motorway', 'trunk', 'primary', 'secondary')
                   AND ref IS NOT NULL
+                  AND  (cycleway is not NULL and cycleway in ('designated', 'lane', 'separate', 'cyclestreet', 'shoulder'))
               ) AS p) AS q
           WHERE height <= 4 AND width <= 11
             AND  (cycleway is not NULL and cycleway in ('designated', 'lane', 'separate', 'cyclestreet', 'shoulder'))
