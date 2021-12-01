@@ -704,6 +704,9 @@ Layer:
             foot,
             bicycle,
             cycleway,
+            "cycleway:right",
+            "cycleway:left",
+            "cycleway:both",
             tracktype,
             int_surface,
             access,
@@ -718,6 +721,9 @@ Layer:
                 horse,
                 foot,
                 cycleway,
+                "cycleway:right",
+                "cycleway:left",
+                "cycleway:both",
                 bicycle,
                 tracktype,
                 CASE WHEN surface IN ('unpaved', 'compacted', 'dirt', 'earth', 'fine_gravel', 'grass', 'grass_paver', 'gravel', 'ground',
@@ -748,6 +754,9 @@ Layer:
             ) AS features
           WHERE 
             (cycleway is not NULL and cycleway in ('designated', 'lane', 'separate', 'cyclestreet', 'shoulder'))
+            OR ("cycleway:right" is not NULL and "cycleway:right" in ('designated', 'lane', 'separate', 'cyclestreet', 'shoulder'))
+            OR ("cycleway:left" is not NULL and "cycleway:left" in ('designated', 'lane', 'yes', 'separate', 'cyclestreet', 'shoulder'))
+            OR ("cycleway:both" is not NULL and "cycleway:both" in ('designated', 'lane', 'yes', 'separate', 'cyclestreet', 'shoulder'))
           ORDER BY
             layernotnull,
             z_order,

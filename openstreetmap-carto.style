@@ -17,6 +17,9 @@ node,way   amenity      text         polygon
 node,way   barrier      text         linear
 way        bicycle      text         linear
 way        cycleway     text         linear
+way        cycleway:left text        linear
+way        cycleway:right text        linear
+way        cycleway:both text        linear
 way        bridge       text         linear
 node,way   boundary     text         linear
 node,way   building     text         polygon

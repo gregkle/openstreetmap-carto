@@ -324,7 +324,7 @@
 
 @railway-text-repeat-distance: 200;
 
-#roads-casing, #bridges, #tunnels {
+#roads-casing{
   ::casing {
         line-color: #000022;
         line-width: @secondary-width-z12;
@@ -365,9 +365,11 @@ osm_planet_line. This is for performance reasons: osm_planet_roads contains less
 data, and is thus faster. Chosen is for zoom level 10 as cut-off, because
 tertiary is rendered from z10 and is not included in osm_planet_roads. */
 
+#bridges,
+#tunnels {}
+
 #roads-fill[zoom >= 9],
-#bridges[zoom >= 10],
-#tunnels[zoom >= 10] {
+{
 
   ::halo {
     [feature = 'highway_secondary'] {
